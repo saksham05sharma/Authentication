@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 const { JWT } = require('../config/index')
+const { omit } = require('../utils/functions')
 
 const register = async (req,res) => {
     const { fname, lname, username, email, password } = req.body;
@@ -41,4 +42,39 @@ const register = async (req,res) => {
     }
 };
 
-module.exports = { register }
+const login = async (req,res) => {
+    const { username, password } = req.body;
+
+    if( !username || !password ) {
+        return res.status(400).json({ message : "Username and Password is required" })
+    }
+
+    try {
+        let user = await User.findOne({ username });
+        if(!user) {
+            return res.status(404).json({ message : "User doesn't exist" })
+        }
+        const isMatch = await bcrypt.compare(password,user.password);
+        if(!isMatch) {
+            return res.status(404).json({ message : "Invalid Credentials" })
+        }
+        const payload = {
+            user: {
+                id: user.id
+            }
+        }
+        const token = jwt.sign(payload, JWT, {expiresIn: 360000}, (req,res)=>{
+            if(err) throw err;
+            return token;
+        });
+        return res.status(200).json({
+            token,
+            user: omit(user, "password"),
+            message: "Login successful",
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(400).json({ message : "Server Error" })
+    }
+};
+module.exports = { register, login }
