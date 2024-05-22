@@ -25,6 +25,10 @@ app.get('/home', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend', 'home'));
 });
 
+app.get('/home', (req, res) => {
+    res.sendFile(path.join(__dirname, 'frontend', 'tasks.html'));
+});
+
 app.listen(PORT, () => {
     connect();
     console.log(`Server is started on port ${PORT}`);

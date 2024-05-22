@@ -15,6 +15,7 @@ form {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
 }
 
 label, input {
@@ -38,4 +39,27 @@ button:hover {
 
 h2 {
     margin-bottom: 20px;
+}
+
+#taskList {
+    width: 100%;
+}
+
+.task {
+    background: #fff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task .task-details {
+    flex: 1;
+}
+
+.task button {
+    margin-left: 10px;
 }

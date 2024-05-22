@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (response.ok) {
                 alert(result.message);
-                window.location.href = '/home.html';
+                window.location.href = '/tasks.html';
             } else {
                 alert(result.message);
             }
