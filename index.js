@@ -21,11 +21,7 @@ app.get('/login', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend', 'login'));
 });
 
-app.get('/home', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'home'));
-});
-
-app.get('/home', (req, res) => {
+app.get('/tasks', (req, res) => {
     res.sendFile(path.join(__dirname, 'frontend', 'tasks.html'));
 });
 

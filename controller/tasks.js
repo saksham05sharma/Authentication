@@ -30,15 +30,16 @@ const getTask = async (req,res) => {
 };
 
 const addTask = async (req,res) => {
-    const { title, discription, date, time } = req.body
-    if( !title || !discription ) {
+	console.log(req.body);
+    const { title, description, date, time } = req.body
+    if( !title || !description ) {
         return res.status(400).json({ message : "Invalid Data" })
     }
     try {
         const newTask = new Task({
             user: req.user.id,
             title,
-            discription,
+            description,
             date, 
             time,
             done: false,

@@ -31,6 +31,7 @@ const register = async (req,res) => {
             }
         }
         jwt.sign(payload,JWT,{expiresIn: 360000},(err,token)=>{
+            console.log(token);
             if(err){
                 console.error(err);
                 return res.status(500).json({ message : "JWT error" });
@@ -63,10 +64,10 @@ const login = async (req,res) => {
                 id: user.id
             }
         }
-        const token = jwt.sign(payload, JWT, {expiresIn: 360000}, (req,res)=>{
-            if(err) throw err;
-            return token;
-        });
+        //token is coming undefined
+        const token = jwt.sign(payload, JWT, {expiresIn: 360000});
+        // console.log(1);
+        console.log(token);
         return res.status(200).json({
             token,
             user: omit(user, "password"),

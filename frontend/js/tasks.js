@@ -4,11 +4,17 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Fetch and display all tasks
     async function fetchTasks() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('User not authenticated');
+            return;
+        }
+
         const response = await fetch('/api/task', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
-                'x-auth-token': localStorage.getItem('token')
+                'x-auth-token': token
             }
         });
 
@@ -29,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function() {
             taskElement.innerHTML = `
                 <div class="task-details">
                     <h3>${task.title}</h3>
-                    <p>${task.discription}</p>
+                    <p>${task.description}</p>
                 </div>
                 <div>
                     <button onclick="markTaskAsDone('${task._id}')">Done</button>
@@ -45,15 +51,21 @@ document.addEventListener('DOMContentLoaded', function() {
         event.preventDefault();
 
         const title = document.getElementById('title').value;
-        const discription = document.getElementById('discription').value;
+        const description = document.getElementById('description').value;
+
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('User not authenticated');
+            return;
+        }
 
         const response = await fetch('/api/task/add', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'x-auth-token': localStorage.getItem('token')
+                'x-auth-token': token
             },
-            body: JSON.stringify({ title, discription })
+            body: JSON.stringify({ title, description })
         });
 
         const result = await response.json();
@@ -67,11 +79,17 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     window.markTaskAsDone = async function(id) {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('User not authenticated');
+            return;
+        }
+
         const response = await fetch(`/api/task/mark-as-done/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'x-auth-token': localStorage.getItem('token')
+                'x-auth-token': token
             }
         });
 
@@ -86,11 +104,17 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     window.moveTaskToTrash = async function(id) {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('User not authenticated');
+            return;
+        }
+
         const response = await fetch(`/api/task/trash/${id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
-                'x-auth-token': localStorage.getItem('token')
+                'x-auth-token': token
             }
         });
 
@@ -105,11 +129,17 @@ document.addEventListener('DOMContentLoaded', function() {
     };
 
     window.deleteTask = async function(id) {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            alert('User not authenticated');
+            return;
+        }
+
         const response = await fetch(`/api/task/delete/${id}`, {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-                'x-auth-token': localStorage.getItem('token')
+                'x-auth-token': token
             }
         });
 
